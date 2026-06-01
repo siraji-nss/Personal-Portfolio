@@ -1,0 +1,30 @@
+{
+  "node": {
+    "1c099d50d44f6c03497bd5e5c47ff346a85622fb": {
+      "workers": {
+        "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Csakib%5C%5Cmy-portfolio%5C%5Capp%5C%5Cactions%5C%5Ccontact.ts%22%2C%5B%22sendContactMessage%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/page": "action-browser"
+      }
+    },
+    "66d486828e0be4f01254752a831736259698171a": {
+      "workers": {
+        "app/admin/(cms)/about/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Csakib%5C%5Cmy-portfolio%5C%5Capp%5C%5Cactions%5C%5Cabout.ts%22%2C%5B%22updateAboutConfig%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/admin/(cms)/about/page": "action-browser"
+      }
+    },
+    "83d113c911fee9dc269bc7f1929112ca24cb2822": {
+      "workers": {
+        "app/admin/(cms)/hero/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Csakib%5C%5Cmy-portfolio%5C%5Capp%5C%5Cactions%5C%5Chero.ts%22%2C%5B%22updateHeroConfig%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/admin/(cms)/hero/page": "rsc"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "xja7XVgAVfhJl2Wl8cbMx9jgLPdO5MjaODmvpkW6NpY="
+}

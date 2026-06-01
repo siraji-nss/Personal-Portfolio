@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Scrollbar — indigo accent */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #6366f1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #818cf8;
+}
+
+/* Selection */
+::selection {
+  background: rgba(99, 102, 241, 0.22);
+  color: #fafafa;
+}
+
+body {
+  background-color: #09090b;
+  color: #fafafa;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  /* Indigo gradient text — replaces old teal gradient */
+  .text-gradient {
+    background: linear-gradient(135deg, #c7d2fe, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Section label divider line */
+  .section-line {
+    height: 1px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Compact card base */
+  .card {
+    @apply bg-white/[0.025] border border-white/[0.07] rounded-xl;
+  }
+
+  /* Typing cursor blink */
+  .cursor-blink {
+    animation: blink 0.75s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* Admin sidebar link active state */
+  .admin-nav-active {
+    @apply bg-indigo-500/10 text-indigo-400 border-l-2 border-indigo-500;
+  }
+
+  /* ── Select / dropdown dark fix (all admin dropdowns) ── */
+  select {
+    background-color: #18181b !important;
+    color: #fff;
+  }
+  select option {
+    background-color: #18181b;
+    color: #fff;
+  }
+  select option:checked {
+    background-color: #4338ca;
+  }
+
+  /* WYSIWYG rendered HTML (About bio) */
+  .wysiwyg p          { margin-bottom: 0.85em; }
+  .wysiwyg h2         { font-size: 1.2em; font-weight: 700; color: #fff; margin-bottom: 0.5em; }
+  .wysiwyg h3         { font-size: 1.05em; font-weight: 600; color: #e4e4e7; margin-bottom: 0.4em; }
+  .wysiwyg strong     { color: #e4e4e7; font-weight: 600; }
+  .wysiwyg em         { font-style: italic; }
+  .wysiwyg u          { text-decoration: underline; }
+  .wysiwyg a          { color: #818cf8; text-decoration: underline; }
+  .wysiwyg ul         { list-style: disc; padding-left: 1.4em; margin-bottom: 0.85em; }
+  .wysiwyg ol         { list-style: decimal; padding-left: 1.4em; margin-bottom: 0.85em; }
+  .wysiwyg li         { margin-bottom: 0.25em; }
+  .wysiwyg hr         { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.2em 0; }
+}
