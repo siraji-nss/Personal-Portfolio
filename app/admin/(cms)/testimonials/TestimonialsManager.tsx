@@ -17,6 +17,7 @@ type Testimonial = {
   name: string;
   designation: string;
   company: string;
+  companyUrl: string | null;
   message: string;
   avatarUrl: string | null;
   isPublic: boolean;
@@ -39,6 +40,7 @@ function TestimonialCard({
   const [name, setName]               = useState(t.name);
   const [designation, setDesignation] = useState(t.designation);
   const [company, setCompany]         = useState(t.company);
+  const [companyUrl, setCompanyUrl]   = useState(t.companyUrl ?? '');
   const [message, setMessage]         = useState(t.message);
   const [avatarUrl, setAvatarUrl]     = useState(t.avatarUrl ?? '');
   const [isPublic, setIsPublic]       = useState(t.isPublic);
@@ -64,6 +66,7 @@ function TestimonialCard({
     const fd = new FormData();
     fd.append('id', t.id); fd.append('name', name);
     fd.append('designation', designation); fd.append('company', company);
+    fd.append('companyUrl', companyUrl);
     fd.append('message', message); fd.append('avatarUrl', avatarUrl);
     fd.append('isPublic', String(isPublic)); fd.append('order', String(t.order));
     startTransition(async () => {
@@ -140,7 +143,10 @@ function TestimonialCard({
               <div><label className={lbl}>Name</label><input value={name} onChange={e => setName(e.target.value)} className={cls} /></div>
               <div><label className={lbl}>Company</label><input value={company} onChange={e => setCompany(e.target.value)} className={cls} /></div>
             </div>
-            <div><label className={lbl}>Designation</label><input value={designation} onChange={e => setDesignation(e.target.value)} className={cls} /></div>
+            <div className="grid grid-cols-2 gap-3">
+              <div><label className={lbl}>Designation</label><input value={designation} onChange={e => setDesignation(e.target.value)} className={cls} /></div>
+              <div><label className={lbl}>Company Website <span className="normal-case text-zinc-700">(optional)</span></label><input type="url" value={companyUrl} onChange={e => setCompanyUrl(e.target.value)} placeholder="https://..." className={cls} /></div>
+            </div>
             <div><label className={lbl}>Message</label><textarea value={message} onChange={e => setMessage(e.target.value)} rows={4} className={cls} /></div>
             <div>
               <label className={lbl}>Photo</label>
@@ -209,7 +215,10 @@ function AddForm({ count }: { count: number }) {
               <div><label className={lbl}>Name *</label><input name="name" required placeholder="Jane Smith" className={cls} /></div>
               <div><label className={lbl}>Company *</label><input name="company" required placeholder="Acme Corp" className={cls} /></div>
             </div>
-            <div><label className={lbl}>Designation *</label><input name="designation" required placeholder="CEO" className={cls} /></div>
+            <div className="grid grid-cols-2 gap-4">
+              <div><label className={lbl}>Designation *</label><input name="designation" required placeholder="CEO" className={cls} /></div>
+              <div><label className={lbl}>Company Website <span className="normal-case text-zinc-700">(optional)</span></label><input name="companyUrl" type="url" placeholder="https://..." className={cls} /></div>
+            </div>
             <div><label className={lbl}>Message *</label><textarea name="message" required rows={4} className={cls} /></div>
             <div>
               <label className={lbl}>Photo</label>

@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import Navigation from '@/components/Navigation';
 
 export const metadata = {
   title: 'Gallery — Nazmus Sakib Siraji',
@@ -28,10 +29,18 @@ function getVimeoEmbedUrl(url: string): string | null {
 }
 
 export default async function GalleryPage() {
-  const posts = await prisma.galleryPost.findMany({ orderBy: { order: 'asc' } });
+  const [posts, heroConfig] = await Promise.all([
+    prisma.galleryPost.findMany({ orderBy: { order: 'asc' } }),
+    prisma.heroConfig.findUnique({ where: { id: 'main' }, select: { fullName: true, avatarUrl: true } }),
+  ]);
 
   return (
-    <main className="min-h-screen bg-[#09090b] pt-28 pb-20 px-6">
+    <>
+      <Navigation
+        fullName={heroConfig?.fullName ?? 'Nazmus Sakib Siraji'}
+        avatarUrl={heroConfig?.avatarUrl}
+      />
+      <main className="min-h-screen bg-[#09090b] pt-28 pb-20 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="mb-12">
           <Link href="/" className="flex items-center gap-1.5 text-xs text-zinc-600 hover:text-indigo-400 transition-colors mb-6">
@@ -104,6 +113,7 @@ export default async function GalleryPage() {
           </div>
         )}
       </div>
-    </main>
+      </main>
+    </>
   );
 }

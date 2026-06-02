@@ -118,7 +118,7 @@ export default function Resume({ experiences, education, trainings }: Props) {
 
   return (
     <section id="resume" className="py-20 px-6 bg-[#0d0d10]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1440px] mx-auto">
         <motion.div
           initial={{ opacity: 0, x: -16 }}
           whileInView={{ opacity: 1, x: 0 }}

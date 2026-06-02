@@ -70,7 +70,7 @@ export default function Navigation({ fullName, avatarUrl }: Props) {
           scrolled ? 'bg-[#09090b]/90 backdrop-blur-xl border-b border-white/[0.05]' : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
+        <div className="w-full px-6 md:px-10 xl:px-16 py-3.5 flex items-center justify-between">
           <NavLogo fullName={fullName} avatarUrl={avatarUrl} />
 
           <div className="hidden md:flex items-center gap-7">

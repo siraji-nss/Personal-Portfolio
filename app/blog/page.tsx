@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Tag } from 'lucide-react';
+import Navigation from '@/components/Navigation';
 
 export const metadata = {
   title: 'Blog — Nazmus Sakib Siraji',
@@ -9,14 +10,22 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await prisma.blogPost.findMany({
-    where: { published: true },
-    orderBy: { createdAt: 'desc' },
-    include: { category: true },
-  });
+  const [posts, heroConfig] = await Promise.all([
+    prisma.blogPost.findMany({
+      where: { published: true },
+      orderBy: { createdAt: 'desc' },
+      include: { category: true },
+    }),
+    prisma.heroConfig.findUnique({ where: { id: 'main' }, select: { fullName: true, avatarUrl: true } }),
+  ]);
 
   return (
-    <main className="min-h-screen bg-[#09090b] pt-28 pb-20 px-6">
+    <>
+      <Navigation
+        fullName={heroConfig?.fullName ?? 'Nazmus Sakib Siraji'}
+        avatarUrl={heroConfig?.avatarUrl}
+      />
+      <main className="min-h-screen bg-[#09090b] pt-28 pb-20 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-4">
@@ -78,6 +87,7 @@ export default async function BlogPage() {
           </div>
         )}
       </div>
-    </main>
+      </main>
+    </>
   );
 }

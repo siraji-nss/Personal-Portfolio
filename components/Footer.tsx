@@ -75,7 +75,7 @@ export default function Footer({ footerConfig, heroConfig }: Props) {
         {/* Subtle radial glow */}
         <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-indigo-950/20 to-transparent pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-6 pt-16 pb-12">
+        <div className="relative max-w-[1440px] mx-auto px-6 pt-16 pb-12">
 
           {/* Section label */}
           <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
@@ -226,7 +226,7 @@ export default function Footer({ footerConfig, heroConfig }: Props) {
 
         {/* Bottom bar */}
         <div className="border-t border-white/[0.05]">
-          <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="max-w-[1440px] mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-xs text-zinc-700">
               © {year} {copyrightName}. All rights reserved.
             </p>

@@ -33,7 +33,7 @@ const education = [
 export default function Education() {
   return (
     <section id="education" className="py-32 px-6 bg-[#0a0a0a]">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-[1200px] mx-auto">
         {/* Section label */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}

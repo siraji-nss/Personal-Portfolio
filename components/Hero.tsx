@@ -121,7 +121,7 @@ export default function Hero({ heroConfig }: Props) {
 
         {/* ── LEFT: content, vertically centred ── */}
         <div className="relative z-10 min-h-screen flex items-center">
-          <div className="w-full max-w-7xl mx-auto px-8 lg:px-12 py-28">
+          <div className="w-full max-w-[1440px] mx-auto px-8 md:px-12 xl:px-16 2xl:px-20 py-28">
             <div className="max-w-[580px]">
 
               {/* Status badge */}

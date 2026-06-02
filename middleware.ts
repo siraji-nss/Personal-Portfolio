@@ -9,6 +9,6 @@ export default withAuth({
 });
 
 export const config = {
-  // Match every /admin path EXCEPT login, forgot-password, and reset-password
-  matcher: ['/admin/((?!login$|forgot-password$|reset-password).*)'],
+  // Match /admin itself AND every /admin/* path EXCEPT login, forgot-password, and reset-password
+  matcher: ['/admin', '/admin/((?!login$|forgot-password$|reset-password).*)'],
 };

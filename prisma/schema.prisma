@@ -349,6 +349,7 @@ model Testimonial {
   name        String
   designation String
   company     String
+  companyUrl  String?
   message     String   @db.Text
   avatarUrl   String?
   isPublic    Boolean  @default(false)

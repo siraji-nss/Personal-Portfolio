@@ -78,9 +78,15 @@ export default function SubmitTestimonialPage() {
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs text-zinc-500 uppercase tracking-wider mb-1.5">Designation / Role *</label>
-            <input name="designation" required placeholder="Chief Technology Officer" className={cls} />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs text-zinc-500 uppercase tracking-wider mb-1.5">Designation / Role *</label>
+              <input name="designation" required placeholder="Chief Technology Officer" className={cls} />
+            </div>
+            <div>
+              <label className="block text-xs text-zinc-500 uppercase tracking-wider mb-1.5">Company Website <span className="normal-case text-zinc-700">(optional)</span></label>
+              <input name="companyUrl" type="url" placeholder="https://acmecorp.com" className={cls} />
+            </div>
           </div>
 
           <div>

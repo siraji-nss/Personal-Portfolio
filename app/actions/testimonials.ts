@@ -18,12 +18,12 @@ export async function submitTestimonial(formData: FormData) {
       name:        (formData.get('name')        as string).trim(),
       designation: (formData.get('designation') as string).trim(),
       company:     (formData.get('company')     as string).trim(),
+      companyUrl:  (formData.get('companyUrl')  as string)?.trim() || null,
       message:     (formData.get('message')     as string).trim(),
       avatarUrl:   (formData.get('avatarUrl')   as string)?.trim() || null,
-      isPublic:    false, // always starts as pending
+      isPublic:    false,
     },
   });
-  // No revalidate — public page handles its own success state
 }
 
 // ─── Admin CRUD ───────────────────────────────────────────────────────────────
@@ -35,6 +35,7 @@ export async function createTestimonial(formData: FormData) {
       name:        (formData.get('name')        as string).trim(),
       designation: (formData.get('designation') as string).trim(),
       company:     (formData.get('company')     as string).trim(),
+      companyUrl:  (formData.get('companyUrl')  as string)?.trim() || null,
       message:     (formData.get('message')     as string).trim(),
       avatarUrl:   (formData.get('avatarUrl')   as string)?.trim() || null,
       isPublic:    formData.get('isPublic') === 'true',
@@ -54,6 +55,7 @@ export async function updateTestimonial(formData: FormData) {
       name:        (formData.get('name')        as string).trim(),
       designation: (formData.get('designation') as string).trim(),
       company:     (formData.get('company')     as string).trim(),
+      companyUrl:  (formData.get('companyUrl')  as string)?.trim() || null,
       message:     (formData.get('message')     as string).trim(),
       avatarUrl:   (formData.get('avatarUrl')   as string)?.trim() || null,
       isPublic:    formData.get('isPublic') === 'true',

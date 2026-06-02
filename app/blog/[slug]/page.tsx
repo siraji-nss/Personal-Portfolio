@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, Tag, ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
+import Navigation from '@/components/Navigation';
 
 type Props = { params: { slug: string } };
 
@@ -21,15 +22,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const post = await prisma.blogPost.findUnique({
-    where: { slug: params.slug, published: true },
-    include: { category: true },
-  });
+  const [post, heroConfig] = await Promise.all([
+    prisma.blogPost.findUnique({
+      where: { slug: params.slug, published: true },
+      include: { category: true },
+    }),
+    prisma.heroConfig.findUnique({ where: { id: 'main' }, select: { fullName: true, avatarUrl: true } }),
+  ]);
 
   if (!post) notFound();
 
   return (
-    <main className="min-h-screen bg-[#09090b] pt-28 pb-20 px-6">
+    <>
+      <Navigation
+        fullName={heroConfig?.fullName ?? 'Nazmus Sakib Siraji'}
+        avatarUrl={heroConfig?.avatarUrl}
+      />
+      <main className="min-h-screen bg-[#09090b] pt-28 pb-20 px-6">
       <div className="max-w-3xl mx-auto">
         <Link href="/blog" className="flex items-center gap-1.5 text-xs text-zinc-600 hover:text-indigo-400 transition-colors mb-8">
           <ArrowLeft size={12} /> Back to Blog
@@ -64,6 +73,7 @@ export default async function BlogPostPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: post.body }}
         />
       </div>
-    </main>
+      </main>
+    </>
   );
 }

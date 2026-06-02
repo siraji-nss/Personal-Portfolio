@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import type { Testimonial } from '@prisma/client';
+import Link from 'next/link';
 
 type Props = { testimonials: Testimonial[] };
 
@@ -82,7 +83,21 @@ function TestimonialCard({ t, delay = 0 }: { t: Testimonial; delay?: number }) {
           <p className="text-white font-semibold text-sm truncate">{t.name}</p>
           <p className="text-zinc-500 text-xs truncate">
             {t.designation}
-            {t.company ? <span className="text-zinc-700"> · {t.company}</span> : null}
+            {t.company ? (
+              <span className="text-zinc-700">
+                {' · '}
+                {(t as Testimonial & { companyUrl?: string | null }).companyUrl ? (
+                  <Link
+                    href={(t as Testimonial & { companyUrl?: string | null }).companyUrl!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-indigo-400 transition-colors"
+                  >
+                    {t.company}
+                  </Link>
+                ) : t.company}
+              </span>
+            ) : null}
           </p>
         </div>
       </div>
@@ -124,7 +139,7 @@ export default function Testimonials({ testimonials }: Props) {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1440px] mx-auto">
 
         {/* Section header */}
         <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
