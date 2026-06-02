@@ -97,7 +97,8 @@ model HeroConfig {
   // Primary title line (shown below the name)
   primaryTitle   String   @default("Software Engineer & Technical Project Manager")
   // Company shown on the primary title line
-  primaryCompany String   @default("Arbree Limited")
+  primaryCompany    String   @default("Arbree Limited")
+  primaryCompanyUrl String?
   // Secondary descriptor lines — each entry renders as a separate line below the primary title
   secondaryLines String[]
   // Social / contact links shown in the "Find with me" row

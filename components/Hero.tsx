@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { MapPin, MessageCircle, Linkedin, X, Mail } from 'lucide-react';
 import type { HeroConfig } from '@prisma/client';
 import ContactModal from './ContactModal';
@@ -56,8 +57,9 @@ export default function Hero({ heroConfig }: Props) {
   const fullName       = heroConfig?.fullName       ?? 'Nazmus Sakib Siraji';
   const heroImageUrl   = heroConfig?.heroImageUrl   ?? null;
   const statusBadge    = heroConfig?.statusBadge    ?? 'Open to new opportunities';
-  const primaryTitle   = heroConfig?.primaryTitle   ?? 'Software Engineer & Technical PM';
-  const primaryCompany = heroConfig?.primaryCompany ?? 'Arbree Limited';
+  const primaryTitle      = heroConfig?.primaryTitle      ?? 'Software Engineer & Technical PM';
+  const primaryCompany    = heroConfig?.primaryCompany    ?? 'Arbree Limited';
+  const primaryCompanyUrl = heroConfig?.primaryCompanyUrl ?? null;
   const secondaryLines = heroConfig?.secondaryLines?.length
     ? heroConfig.secondaryLines
     : ['Founder & CEO · Technonix', 'Joint Secretary · Bangladesh Human Rights Enforcement Foundation'];
@@ -190,7 +192,18 @@ export default function Hero({ heroConfig }: Props) {
                 className="text-base text-zinc-300 font-medium mb-1"
               >
                 {primaryTitle} at{' '}
-                <span className="text-indigo-400">{primaryCompany}</span>
+                {primaryCompanyUrl ? (
+                  <Link
+                    href={primaryCompanyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2 decoration-indigo-500/40 hover:decoration-indigo-400 transition-colors"
+                  >
+                    {primaryCompany}
+                  </Link>
+                ) : (
+                  <span className="text-indigo-400">{primaryCompany}</span>
+                )}
               </motion.p>
 
               {/* Secondary lines */}

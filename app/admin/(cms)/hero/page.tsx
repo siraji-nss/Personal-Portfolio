@@ -53,6 +53,12 @@ export default async function HeroAdminPage() {
         <Field label="Primary Title" name="primaryTitle" defaultValue={hero?.primaryTitle} />
         <Field label="Primary Company" name="primaryCompany" defaultValue={hero?.primaryCompany} />
         <Field
+          label="Primary Company URL"
+          name="primaryCompanyUrl"
+          defaultValue={hero?.primaryCompanyUrl ?? ''}
+          hint="e.g. https://arbree.com — makes the company name a clickable link in the hero."
+        />
+        <Field
           label="Secondary Lines (one per line)"
           name="secondaryLines"
           textarea
