@@ -18,10 +18,10 @@ export async function updateAboutConfig(formData: FormData) {
   const cvUrl    = (formData.get('cvUrl')    as string)?.trim() || null;
   const cardsRaw = (formData.get('cards')    as string)?.trim() ?? '[]';
 
-  let cards: unknown[];
+  let cards: object[];
   try {
-    cards = JSON.parse(cardsRaw);
-    if (!Array.isArray(cards)) cards = [];
+    const parsed = JSON.parse(cardsRaw);
+    cards = Array.isArray(parsed) ? parsed : [];
   } catch {
     cards = [];
   }
