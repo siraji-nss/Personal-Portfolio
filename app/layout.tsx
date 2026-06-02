@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Providers from '@/components/providers';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 async function buildMetadata(): Promise<Metadata> {
@@ -32,6 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className="scroll-smooth">
       <body className="bg-[#09090b] text-zinc-50 antialiased">
         <Providers session={session}>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
