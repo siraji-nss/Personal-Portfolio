@@ -70,7 +70,7 @@ export default function Services({ services }: Props) {
           viewport={{ once: true }}
           className="flex items-center gap-4 mb-12"
         >
-          <span className="text-xs uppercase tracking-[4px] text-indigo-500 font-semibold">03</span>
+          <span className="text-xs uppercase tracking-[4px] text-indigo-500 font-semibold">02</span>
           <span className="text-xs uppercase tracking-[4px] text-zinc-600">Services</span>
           <div className="h-px flex-1 bg-white/[0.06]" />
         </motion.div>

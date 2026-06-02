@@ -64,3 +64,13 @@ export async function deleteExperience(formData: FormData) {
   revalidatePath('/');
   revalidatePath('/admin/experience');
 }
+
+export async function batchUpdateExperienceOrder(formData: FormData) {
+  await requireAdmin();
+  const ids = JSON.parse(formData.get('ids') as string) as string[];
+  await Promise.all(
+    ids.map((id, order) => prisma.experience.update({ where: { id }, data: { order } })),
+  );
+  revalidatePath('/');
+  revalidatePath('/admin/experience');
+}

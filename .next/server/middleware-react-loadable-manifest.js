@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST="{\"app\\\\admin\\\\(cms)\\\\about\\\\AboutForm.tsx -> @/components/TiptapEditor\":{\"id\":\"app\\\\admin\\\\(cms)\\\\about\\\\AboutForm.tsx -> @/components/TiptapEditor\",\"files\":[\"static/chunks/_app-pages-browser_components_TiptapEditor_tsx.js\"]}}"

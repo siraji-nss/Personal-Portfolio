@@ -131,18 +131,32 @@ model PasswordResetToken {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Skills — Two-Column Layout
-// category: "tech" renders in the left column (Software Engineering)
-// category: "pm"   renders in the right column (Project Management)
+// Skill Categories — Dynamic, ordered, coloured
+// slug must match Skill.category string value.
+// color options: indigo | violet | emerald | rose | blue | amber | cyan | orange
+// ─────────────────────────────────────────────────────────────────────────────
+
+model SkillCategory {
+  id    String @id @default(cuid())
+  name  String
+  // Short key used to group skills, e.g. "tech", "pm", "consulting"
+  slug  String @unique
+  // Tailwind colour name for the column accent
+  color String @default("indigo")
+  order Int    @default(0)
+
+  @@map("skill_categories")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Skills — belong to a SkillCategory via the category slug string
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Skill {
   id          String @id @default(cuid())
   name        String
-  // "tech" | "pm"
+  // Must match a SkillCategory.slug value
   category    String
-  // Tech subcategories: "Frontend", "Backend", "Mobile", "Database", "CMS", "Design", "Infra"
-  // PM subcategories:   "Delivery", "Strategy", "Agile", "Leadership", "Research"
   subcategory String
   order       Int    @default(0)
 
@@ -315,13 +329,34 @@ model Training {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model FooterConfig {
-  id          String   @id @default("main")
-  tagline     String?  @default("Building technology with purpose.")
-  description String?  @db.Text
+  id           String   @id @default("main")
+  tagline      String?  @default("Building technology with purpose.")
+  description  String?  @db.Text
   copyrightName String? @default("Nazmus Sakib Siraji")
-  updatedAt   DateTime @updatedAt
+  // Short designation shown under the name in the footer brand column
+  designation  String?  @default("Software Engineer & TPM")
+  updatedAt    DateTime @updatedAt
 
   @@map("footer_config")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Testimonials
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  designation String
+  company     String
+  message     String   @db.Text
+  avatarUrl   String?
+  isPublic    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("testimonials")
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

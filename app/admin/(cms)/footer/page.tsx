@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { updateFooterConfig } from '@/app/actions/footer';
+import AdminForm from '@/components/admin/AdminForm';
 
 const inputCls = 'w-full px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-lg text-sm text-white placeholder-zinc-700 focus:outline-none focus:border-indigo-500/40 transition-all resize-none';
 
@@ -13,7 +14,7 @@ export default async function FooterAdminPage() {
         Controls the footer tagline, description, and copyright name.
       </p>
 
-      <form action={updateFooterConfig} className="space-y-5 max-w-2xl">
+      <AdminForm action={updateFooterConfig} className="space-y-5 max-w-2xl">
         <div>
           <label className="block text-xs text-zinc-500 mb-1.5 uppercase tracking-wider">Tagline</label>
           <input
@@ -36,6 +37,17 @@ export default async function FooterAdminPage() {
         </div>
 
         <div>
+          <label className="block text-xs text-zinc-500 mb-1.5 uppercase tracking-wider">Footer Designation</label>
+          <input
+            name="designation"
+            defaultValue={footer?.designation ?? ''}
+            className={inputCls}
+            placeholder="Software Engineer & TPM"
+          />
+          <p className="text-[11px] text-zinc-700 mt-1">Short title shown under your name in the footer brand column.</p>
+        </div>
+
+        <div>
           <label className="block text-xs text-zinc-500 mb-1.5 uppercase tracking-wider">Copyright Name</label>
           <input
             name="copyrightName"
@@ -45,14 +57,7 @@ export default async function FooterAdminPage() {
           />
           <p className="text-[11px] text-zinc-700 mt-1">Used in &quot;© 2024 [name]. All rights reserved.&quot;</p>
         </div>
-
-        <button
-          type="submit"
-          className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-lg transition-colors"
-        >
-          Save Changes
-        </button>
-      </form>
+      </AdminForm>
     </div>
   );
 }

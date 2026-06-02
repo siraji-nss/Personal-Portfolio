@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import { updateHeroConfig } from '@/app/actions/hero';
 import AvatarUpload from './AvatarUpload';
+import AdminForm from '@/components/admin/AdminForm';
+import ImageUploadField from '@/components/admin/ImageUploadField';
 
 export default async function HeroAdminPage() {
   const hero = await prisma.heroConfig.findUnique({ where: { id: 'main' } });
@@ -12,7 +14,7 @@ export default async function HeroAdminPage() {
         Controls the nav logo photo, hero section photo, typing animation, badge, and intro text.
       </p>
 
-      <form action={updateHeroConfig} className="space-y-5 max-w-2xl">
+      <AdminForm action={updateHeroConfig} className="space-y-5 max-w-2xl">
         <Field
           label="Full Name"
           name="fullName"
@@ -56,7 +58,7 @@ export default async function HeroAdminPage() {
           textarea
           rows={4}
           defaultValue={hero?.secondaryLines?.join('\n') ?? ''}
-          hint="Each line appears separately below the primary title. E.g. one line per role or affiliation."
+          hint="Each line appears separately below the primary title."
         />
 
         <hr className="border-white/[0.06] my-2" />
@@ -92,11 +94,11 @@ export default async function HeroAdminPage() {
         <hr className="border-white/[0.06] my-2" />
         <p className="text-xs text-zinc-600 uppercase tracking-widest">Contact &amp; Identity</p>
 
-        <Field
-          label="Favicon URL"
-          name="faviconUrl"
-          defaultValue={hero?.faviconUrl ?? ''}
-          hint="URL to site favicon (.ico, .png). Used as browser tab icon."
+        <ImageUploadField
+          fieldName="faviconUrl"
+          label="Favicon"
+          initialUrl={hero?.faviconUrl}
+          hint="PNG favicon shown as the browser tab icon. Recommended: 32×32 or 64×64 PNG."
         />
 
         <Field
@@ -118,9 +120,7 @@ export default async function HeroAdminPage() {
               : ''
           }
         />
-
-        <SaveButton />
-      </form>
+      </AdminForm>
     </div>
   );
 }
@@ -142,13 +142,5 @@ function Field({
       )}
       {hint && <p className="text-[11px] text-zinc-700 mt-1">{hint}</p>}
     </div>
-  );
-}
-
-function SaveButton() {
-  return (
-    <button type="submit" className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-lg transition-colors">
-      Save Changes
-    </button>
   );
 }

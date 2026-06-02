@@ -17,6 +17,7 @@ export async function updateFooterConfig(formData: FormData) {
     tagline:       (formData.get('tagline')       as string)?.trim() || null,
     description:   (formData.get('description')   as string)?.trim() || null,
     copyrightName: (formData.get('copyrightName') as string)?.trim() || null,
+    designation:   (formData.get('designation')   as string)?.trim() || null,
   };
 
   await prisma.footerConfig.upsert({

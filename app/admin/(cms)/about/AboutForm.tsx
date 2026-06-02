@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Loader2, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Loader2, ChevronDown, ChevronUp } from 'lucide-react';
+import SaveModal from '@/components/admin/SaveModal';
+import FileUploadField from '@/components/admin/FileUploadField';
 import dynamic from 'next/dynamic';
 import { updateAboutConfig } from '@/app/actions/about';
 
@@ -55,7 +57,7 @@ export default function AboutForm({ defaultHeadline, defaultBio, defaultCvUrl, d
     return init;
   });
   const [expanded, setExpanded] = useState<string | null>(null);
-  const [saved, setSaved]       = useState(false);
+  const [modal, setModal] = useState<{ success: boolean; message: string } | null>(null);
   const [isPending, startTransition] = useTransition();
 
   function update(id: string, field: keyof BentoCardData, value: string) {
@@ -67,13 +69,23 @@ export default function AboutForm({ defaultHeadline, defaultBio, defaultCvUrl, d
     const fd = new FormData(e.currentTarget);
     fd.set('cards', JSON.stringify(Object.values(cards)));
     startTransition(async () => {
-      await updateAboutConfig(fd);
-      setSaved(true);
-      setTimeout(() => setSaved(false), 2500);
+      try {
+        await updateAboutConfig(fd);
+        setModal({ success: true, message: 'About section saved successfully.' });
+      } catch (err) {
+        setModal({
+          success: false,
+          message: err instanceof Error ? err.message : 'Something went wrong.',
+        });
+      }
     });
   }
 
   return (
+    <>
+    {modal && (
+      <SaveModal success={modal.success} message={modal.message} onClose={() => setModal(null)} />
+    )}
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
 
       {/* Headline */}
@@ -88,12 +100,13 @@ export default function AboutForm({ defaultHeadline, defaultBio, defaultCvUrl, d
         <TiptapEditor name="bio" defaultValue={defaultBio} />
       </div>
 
-      {/* CV URL */}
-      <div>
-        <label className="block text-xs text-zinc-500 uppercase tracking-wider mb-1.5">CV / Resume URL</label>
-        <input name="cvUrl" defaultValue={defaultCvUrl} placeholder="https://…" className={inputCls} />
-        <p className="text-[11px] text-zinc-700 mt-1">A "Download CV" button appears when this is set.</p>
-      </div>
+      {/* CV Upload */}
+      <FileUploadField
+        fieldName="cvUrl"
+        label="CV / Resume"
+        initialUrl={defaultCvUrl}
+        hint='A "Download CV" button appears on the portfolio when this is set.'
+      />
 
       {/* Bento cards */}
       <div>
@@ -191,10 +204,11 @@ export default function AboutForm({ defaultHeadline, defaultBio, defaultCvUrl, d
 
       {/* Submit */}
       <button type="submit" disabled={isPending}
-        className="flex items-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition-colors">
+        className="flex items-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors">
         {isPending && <Loader2 size={14} className="animate-spin" />}
-        {saved ? <><CheckCircle2 size={14} /> Saved!</> : 'Save Changes'}
+        {isPending ? 'Saving…' : 'Save Changes'}
       </button>
     </form>
+    </>
   );
 }

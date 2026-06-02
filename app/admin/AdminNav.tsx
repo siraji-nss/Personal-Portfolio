@@ -6,24 +6,25 @@ import { signOut } from 'next-auth/react';
 import {
   LayoutDashboard, Star, Zap, Briefcase, GraduationCap,
   FolderKanban, Users, LogOut, ExternalLink, User, Info, BarChart2,
-  BookOpen, Image, Award, Settings2,
+  BookOpen, Image, Award, Settings2, MessageSquareQuote,
 } from 'lucide-react';
 
 const links = [
-  { href: '/admin',        label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/hero',   label: 'Hero',      icon: Star },
-  { href: '/admin/about',  label: 'About',     icon: Info },
-  { href: '/admin/stats',  label: 'Stats',     icon: BarChart2 },
-  { href: '/admin/skills', label: 'Skills',    icon: Zap },
-  { href: '/admin/services', label: 'Services', icon: Briefcase },
-  { href: '/admin/experience', label: 'Experience', icon: User },
-  { href: '/admin/education', label: 'Education', icon: GraduationCap },
-  { href: '/admin/projects', label: 'Projects', icon: FolderKanban },
-  { href: '/admin/clients', label: 'Clients', icon: Users },
-  { href: '/admin/blog',     label: 'Blog',     icon: BookOpen },
-  { href: '/admin/gallery',  label: 'Gallery',  icon: Image },
-  { href: '/admin/training', label: 'Training', icon: Award },
-  { href: '/admin/footer',   label: 'Footer',   icon: Settings2 },
+  { href: '/admin',              label: 'Dashboard',     icon: LayoutDashboard },
+  { href: '/admin/hero',         label: 'Hero',          icon: Star },
+  { href: '/admin/about',        label: 'About',         icon: Info },
+  { href: '/admin/stats',        label: 'Stats',         icon: BarChart2 },
+  { href: '/admin/skills',       label: 'Skills',        icon: Zap },
+  { href: '/admin/services',     label: 'Services',      icon: Briefcase },
+  { href: '/admin/experience',   label: 'Experience',    icon: User },
+  { href: '/admin/education',    label: 'Education',     icon: GraduationCap },
+  { href: '/admin/projects',     label: 'Projects',      icon: FolderKanban },
+  { href: '/admin/clients',      label: 'Clients',       icon: Users },
+  { href: '/admin/testimonials', label: 'Testimonials',  icon: MessageSquareQuote },
+  { href: '/admin/blog',         label: 'Blog',          icon: BookOpen },
+  { href: '/admin/gallery',      label: 'Gallery',       icon: Image },
+  { href: '/admin/training',     label: 'Training',      icon: Award },
+  { href: '/admin/footer',       label: 'Footer',        icon: Settings2 },
 ];
 
 export default function AdminNav() {

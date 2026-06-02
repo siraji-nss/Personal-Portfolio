@@ -13,14 +13,15 @@ type Props = {
 };
 
 const navLinks = [
-  { label: 'About',     href: '#about',     external: false },
-  { label: 'Skills',    href: '#skills',    external: false },
-  { label: 'Services',  href: '#services',  external: false },
-  { label: 'Resume',    href: '#resume',    external: false },
-  { label: 'Portfolio', href: '#portfolio', external: false },
-  { label: 'Clients',   href: '#clients',   external: false },
-  { label: 'Blog',      href: '/blog',      external: true  },
-  { label: 'Gallery',   href: '/gallery',   external: true  },
+  { label: 'About',        href: '#about',         external: false },
+  { label: 'Services',     href: '#services',      external: false },
+  { label: 'Skills',       href: '#skills',        external: false },
+  { label: 'Resume',       href: '#resume',        external: false },
+  { label: 'Portfolio',    href: '#portfolio',     external: false },
+  { label: 'Clients',      href: '#clients',       external: false },
+  { label: 'Testimonials', href: '#testimonials',  external: false },
+  { label: 'Blog',         href: '/blog',          external: true  },
+  { label: 'Gallery',      href: '/gallery',       external: true  },
 ];
 
 function NavLogo({ fullName, avatarUrl }: Props) {
