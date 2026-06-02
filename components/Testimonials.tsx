@@ -11,19 +11,19 @@ type Props = { testimonials: Testimonial[] };
 
 const FALLBACK: Testimonial[] = [
   {
-    id: '1', name: 'Sarah Johnson', designation: 'CTO', company: 'TechVenture Ltd',
+    id: '1', name: 'Sarah Johnson', designation: 'CTO', company: 'TechVenture Ltd', companyUrl: null,
     message: 'Working with Sakib was transformative for our product. His dual expertise in engineering and project management meant nothing fell through the cracks. Delivery was on time, on budget, and beyond expectations.',
     avatarUrl: null, isPublic: true, order: 0,
     createdAt: new Date(), updatedAt: new Date(),
   },
   {
-    id: '2', name: 'Ahmed Al-Rashid', designation: 'CEO', company: 'GrowthAxis MENA',
+    id: '2', name: 'Ahmed Al-Rashid', designation: 'CEO', company: 'GrowthAxis MENA', companyUrl: null,
     message: 'Sakib brought clarity to a chaotic codebase and turned it into a scalable platform. His communication was excellent throughout. I would hire him again without hesitation.',
     avatarUrl: null, isPublic: true, order: 1,
     createdAt: new Date(), updatedAt: new Date(),
   },
   {
-    id: '3', name: 'Priya Nair', designation: 'Product Manager', company: 'EduSpark',
+    id: '3', name: 'Priya Nair', designation: 'Product Manager', company: 'EduSpark', companyUrl: null,
     message: 'The mobile app Sakib delivered exceeded our brief in every way. His attention to UX detail and his instinct for what users actually need is rare. A true full-stack partner.',
     avatarUrl: null, isPublic: true, order: 2,
     createdAt: new Date(), updatedAt: new Date(),
@@ -86,9 +86,9 @@ function TestimonialCard({ t, delay = 0 }: { t: Testimonial; delay?: number }) {
             {t.company ? (
               <span className="text-zinc-700">
                 {' · '}
-                {(t as Testimonial & { companyUrl?: string | null }).companyUrl ? (
+                {t.companyUrl ? (
                   <Link
-                    href={(t as Testimonial & { companyUrl?: string | null }).companyUrl!}
+                    href={t.companyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-indigo-400 transition-colors"
