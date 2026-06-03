@@ -33,16 +33,18 @@ export default function ImageUploadField({
   async function uploadFile(file: File) {
     setUploading(true);
     setError('');
-    const fd = new FormData();
-    fd.append('file', file);
-    const res = await fetch('/api/upload', { method: 'POST', body: fd });
-    const json = await res.json();
-    setUploading(false);
-    if (!res.ok) {
-      setError(json.error ?? 'Upload failed.');
-      return;
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const res  = await fetch('/api/upload', { method: 'POST', body: fd });
+      const json = await res.json();
+      if (!res.ok) { setError(json.error ?? 'Upload failed.'); return; }
+      applyUrl(json.url);
+    } catch {
+      setError('Upload failed. Please try again.');
+    } finally {
+      setUploading(false);
     }
-    applyUrl(json.url);
   }
 
   function clearImage() {

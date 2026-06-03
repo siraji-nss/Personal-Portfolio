@@ -1,21 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { put } from '@vercel/blob';
 
-const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-const DOC_TYPES   = ['application/pdf'];
+const IMAGE_TYPES   = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+const DOC_TYPES     = ['application/pdf'];
 const ALLOWED_TYPES = [...IMAGE_TYPES, ...DOC_TYPES];
 
 const IMAGE_MAX = 5  * 1024 * 1024; // 5 MB
 const DOC_MAX   = 20 * 1024 * 1024; // 20 MB
 
 export async function POST(req: NextRequest) {
+  // Give a clear error if the Blob store token is not configured yet
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    return NextResponse.json(
+      { error: 'File upload is not configured. Please link the Vercel Blob store to this project in the Vercel dashboard.' },
+      { status: 503 },
+    );
+  }
+
   const formData = await req.formData();
   const file = formData.get('file') as File | null;
 
-  if (!file) return NextResponse.json({ error: 'No file provided.' }, { status: 400 });
+  if (!file)
+    return NextResponse.json({ error: 'No file provided.' }, { status: 400 });
+
   if (!ALLOWED_TYPES.includes(file.type))
-    return NextResponse.json({ error: 'Only JPG, PNG, WebP, GIF, or PDF allowed.' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Only JPG, PNG, WebP, GIF, or PDF allowed.' },
+      { status: 400 },
+    );
 
   const maxSize = DOC_TYPES.includes(file.type) ? DOC_MAX : IMAGE_MAX;
   if (file.size > maxSize)
@@ -24,13 +36,13 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     );
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const ext = path.extname(file.name) || '.jpg';
-  const filename = `${Date.now()}${ext}`;
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+  const ext      = file.name.split('.').pop() ?? 'bin';
+  const filename = `uploads/${Date.now()}.${ext}`;
 
-  await mkdir(uploadDir, { recursive: true });
-  await writeFile(path.join(uploadDir, filename), buffer);
+  const blob = await put(filename, file, {
+    access: 'public',
+    contentType: file.type,
+  });
 
-  return NextResponse.json({ url: `/uploads/${filename}` });
+  return NextResponse.json({ url: blob.url });
 }
