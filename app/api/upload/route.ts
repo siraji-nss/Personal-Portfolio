@@ -9,14 +9,6 @@ const IMAGE_MAX = 5  * 1024 * 1024; // 5 MB
 const DOC_MAX   = 20 * 1024 * 1024; // 20 MB
 
 export async function POST(req: NextRequest) {
-  // Give a clear error if the Blob store token is not configured yet
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    return NextResponse.json(
-      { error: 'File upload is not configured. Please link the Vercel Blob store to this project in the Vercel dashboard.' },
-      { status: 503 },
-    );
-  }
-
   const formData = await req.formData();
   const file = formData.get('file') as File | null;
 
@@ -39,6 +31,8 @@ export async function POST(req: NextRequest) {
   const ext      = file.name.split('.').pop() ?? 'bin';
   const filename = `uploads/${Date.now()}.${ext}`;
 
+  // @vercel/blob automatically uses BLOB_READ_WRITE_TOKEN if set,
+  // or falls back to VERCEL_OIDC_TOKEN + BLOB_STORE_ID (OIDC auth).
   const blob = await put(filename, file, {
     access: 'public',
     contentType: file.type,
