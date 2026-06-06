@@ -49,10 +49,10 @@ function ExpCard({ exp, index }: { exp: Experience; index: number }) {
         <>
           <button
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-1 text-[11px] text-zinc-700 hover:text-indigo-400 transition-colors mb-2"
+            className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full border border-indigo-500/30 text-indigo-400 bg-indigo-500/[0.08] hover:bg-indigo-500/20 hover:border-indigo-500/50 transition-all duration-200 mb-2"
           >
             <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}>
-              <ChevronDown size={12} />
+              <ChevronDown size={11} />
             </motion.span>
             {open ? 'Hide' : 'View'} projects ({exp.projects.length})
           </button>

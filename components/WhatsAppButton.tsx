@@ -2,9 +2,11 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function WhatsAppButton({ number }: { number: string }) {
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
   const href = `https://wa.me/${number.replace(/\D/g, '')}`;
 
   // Only show after a short delay so it doesn't flash on initial load
@@ -12,6 +14,9 @@ export default function WhatsAppButton({ number }: { number: string }) {
     const t = setTimeout(() => setVisible(true), 1200);
     return () => clearTimeout(t);
   }, []);
+
+  // Never show in the admin panel
+  if (pathname.startsWith('/admin')) return null;
 
   return (
     <AnimatePresence>
