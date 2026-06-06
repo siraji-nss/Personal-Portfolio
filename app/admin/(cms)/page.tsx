@@ -1,9 +1,9 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import { Star, Zap, Briefcase, User, GraduationCap, FolderKanban, Users, ArrowRight, Info, BarChart2, BookOpen, Image, Award, Settings2 } from 'lucide-react';
+import { Star, Zap, Briefcase, User, GraduationCap, FolderKanban, Users, ArrowRight, Info, BarChart2, BookOpen, Image, Award, Settings2, Inbox } from 'lucide-react';
 
 async function getCounts() {
-  const [skills, services, experiences, education, projects, clients, stats, blog, gallery, training] = await Promise.all([
+  const [skills, services, experiences, education, projects, clients, stats, blog, gallery, training, inboxUnread] = await Promise.all([
     prisma.skill.count(),
     prisma.service.count(),
     prisma.experience.count(),
@@ -14,11 +14,13 @@ async function getCounts() {
     prisma.blogPost.count(),
     prisma.galleryPost.count(),
     prisma.training.count(),
+    prisma.contactMessage.count({ where: { isRead: false } }),
   ]);
-  return { skills, services, experiences, education, projects, clients, stats, blog, gallery, training };
+  return { skills, services, experiences, education, projects, clients, stats, blog, gallery, training, inboxUnread };
 }
 
 const sections = [
+  { href: '/admin/inbox',      label: 'Inbox',       icon: Inbox,         desc: 'Contact form messages from visitors' },
   { href: '/admin/hero',       label: 'Hero',        icon: Star,          desc: 'Photo, name, typing texts, status badge' },
   { href: '/admin/about',      label: 'About',       icon: Info,          desc: 'Bio, headline, CV link, bento cards' },
   { href: '/admin/stats',      label: 'Stats',       icon: BarChart2,     desc: 'Numbers shown in the About section' },
@@ -36,17 +38,18 @@ const sections = [
 
 export default async function AdminDashboard() {
   const counts = await getCounts();
-  const countMap: Record<string, number> = {
-    '/admin/skills':     counts.skills,
-    '/admin/services':   counts.services,
-    '/admin/experience': counts.experiences,
-    '/admin/education':  counts.education,
-    '/admin/projects':   counts.projects,
-    '/admin/clients':    counts.clients,
-    '/admin/stats':      counts.stats,
-    '/admin/blog':       counts.blog,
-    '/admin/gallery':    counts.gallery,
-    '/admin/training':   counts.training,
+  const countMap: Record<string, { count: number; label?: string }> = {
+    '/admin/inbox':      { count: counts.inboxUnread, label: counts.inboxUnread > 0 ? `${counts.inboxUnread} unread` : 'no new' },
+    '/admin/skills':     { count: counts.skills },
+    '/admin/services':   { count: counts.services },
+    '/admin/experience': { count: counts.experiences },
+    '/admin/education':  { count: counts.education },
+    '/admin/projects':   { count: counts.projects },
+    '/admin/clients':    { count: counts.clients },
+    '/admin/stats':      { count: counts.stats },
+    '/admin/blog':       { count: counts.blog },
+    '/admin/gallery':    { count: counts.gallery },
+    '/admin/training':   { count: counts.training },
   };
 
   return (
@@ -65,7 +68,13 @@ export default async function AdminDashboard() {
                 <Icon size={16} className="text-indigo-400" />
               </div>
               {countMap[href] !== undefined && (
-                <span className="text-xs text-zinc-600 font-mono">{countMap[href]} items</span>
+                <span className={`text-xs font-mono ${
+                  href === '/admin/inbox' && countMap[href].count > 0
+                    ? 'text-indigo-400 font-semibold'
+                    : 'text-zinc-600'
+                }`}>
+                  {countMap[href].label ?? `${countMap[href].count} items`}
+                </span>
               )}
             </div>
             <p className="text-sm font-semibold text-white mb-1 group-hover:text-indigo-300 transition-colors">{label}</p>

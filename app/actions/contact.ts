@@ -1,6 +1,8 @@
 'use server';
 
 import { Resend } from 'resend';
+import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -12,9 +14,23 @@ export async function sendContactMessage(formData: FormData) {
   const message       = (formData.get('message')       as string)?.trim() ?? '';
   const attachmentUrl = (formData.get('attachmentUrl') as string)?.trim() ?? '';
 
-  if (!name)           return { error: 'Name is required.' };
+  if (!name)            return { error: 'Name is required.' };
   if (!phone && !email) return { error: 'Please provide at least a phone number or email address.' };
 
+  // Persist to DB first — this is the source of truth for the admin inbox
+  await prisma.contactMessage.create({
+    data: {
+      name,
+      phone:         phone || null,
+      email:         email || null,
+      subject:       subject || null,
+      message:       message || null,
+      attachmentUrl: attachmentUrl || null,
+    },
+  });
+  revalidatePath('/admin/inbox');
+
+  // Send email notification — non-fatal if it fails
   const html = `
     <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px;background:#09090b;color:#e4e4e7;border-radius:12px">
       <h2 style="margin:0 0 20px;color:#fff;font-size:18px">New Contact Form Message</h2>
@@ -37,16 +53,39 @@ export async function sendContactMessage(formData: FormData) {
 
   try {
     await resend.emails.send({
-      from: 'Portfolio Contact <onboarding@resend.dev>',
-      to:   'nazmussakibsiraji@gmail.com',
+      from:    'Portfolio Contact <onboarding@resend.dev>',
+      to:      'nazmussakibsiraji@gmail.com',
       replyTo: email || undefined,
       subject: subject ? `${subject} — from ${name}` : `New message from ${name}`,
       html,
     });
   } catch (err) {
     console.error('[contact] Email send failed:', err);
-    console.log('[contact] Submission data:', { name, phone, email, message, attachmentUrl });
   }
 
   return { success: true };
+}
+
+// ─── Admin actions ────────────────────────────────────────────────────────────
+
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+
+async function requireAdmin() {
+  const session = await getServerSession(authOptions);
+  if (!session) throw new Error('Unauthorized');
+}
+
+export async function markMessageRead(formData: FormData) {
+  await requireAdmin();
+  const id     = formData.get('id') as string;
+  const isRead = formData.get('isRead') === 'true';
+  await prisma.contactMessage.update({ where: { id }, data: { isRead } });
+  revalidatePath('/admin/inbox');
+}
+
+export async function deleteMessage(formData: FormData) {
+  await requireAdmin();
+  await prisma.contactMessage.delete({ where: { id: formData.get('id') as string } });
+  revalidatePath('/admin/inbox');
 }

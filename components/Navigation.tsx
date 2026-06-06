@@ -13,7 +13,9 @@ type Props = {
   avatarUrl?: string | null;
 };
 
-const SECTION_IDS = ['about', 'services', 'skills', 'resume', 'portfolio', 'clients', 'testimonials'];
+// 'hero' is included so scrolling to the top fires the observer and clears the active section
+// (no nav link maps to 'hero', so nothing gets highlighted when at the top)
+const SECTION_IDS = ['hero', 'about', 'services', 'skills', 'resume', 'portfolio', 'clients', 'testimonials'];
 
 const navLinks = [
   { label: 'About',        href: '#about',        sectionId: 'about'        },

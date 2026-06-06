@@ -398,6 +398,24 @@ model BlogPost {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Contact Inbox — stores every contact form submission
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ContactMessage {
+  id            String   @id @default(cuid())
+  name          String
+  phone         String?
+  email         String?
+  subject       String?
+  message       String?  @db.Text
+  attachmentUrl String?
+  isRead        Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  @@map("contact_messages")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Gallery
 // ─────────────────────────────────────────────────────────────────────────────
 

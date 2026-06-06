@@ -7,11 +7,12 @@ import { useState } from 'react';
 import {
   LayoutDashboard, Star, Zap, Briefcase, GraduationCap,
   FolderKanban, Users, LogOut, ExternalLink, User, Info, BarChart2,
-  BookOpen, Image, Award, Settings2, MessageSquareQuote, Menu, X,
+  BookOpen, Image, Award, Settings2, MessageSquareQuote, Menu, X, Inbox,
 } from 'lucide-react';
 
 const links = [
   { href: '/admin',              label: 'Dashboard',     icon: LayoutDashboard },
+  { href: '/admin/inbox',        label: 'Inbox',         icon: Inbox },
   { href: '/admin/hero',         label: 'Hero',          icon: Star },
   { href: '/admin/about',        label: 'About',         icon: Info },
   { href: '/admin/stats',        label: 'Stats',         icon: BarChart2 },
