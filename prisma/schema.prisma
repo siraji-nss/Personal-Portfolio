@@ -112,6 +112,10 @@ model HeroConfig {
   orgEmails      Json    @default("[]")
   // Site favicon URL
   faviconUrl     String?
+  // Browser tab title (e.g. "Nazmus Sakib Siraji — Software Engineer")
+  siteTitle      String?
+  // X (formerly Twitter) profile URL
+  twitterUrl     String?
   updatedAt     DateTime @updatedAt
 
   @@map("hero_config")
@@ -351,6 +355,7 @@ model Testimonial {
   designation String
   company     String
   companyUrl  String?
+  profileUrl  String?
   message     String   @db.Text
   avatarUrl   String?
   isPublic    Boolean  @default(false)

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapPin, MessageCircle, Linkedin, X, Mail } from 'lucide-react';
+import { MapPin, MessageCircle, Linkedin, X, Mail, Twitter } from 'lucide-react';
 import type { HeroConfig } from '@prisma/client';
 import ContactModal from './ContactModal';
 
@@ -60,6 +60,7 @@ export default function Hero({ heroConfig }: Props) {
   const primaryTitle      = heroConfig?.primaryTitle      ?? 'Software Engineer & Technical PM';
   const primaryCompany    = heroConfig?.primaryCompany    ?? 'Arbree Limited';
   const primaryCompanyUrl = heroConfig?.primaryCompanyUrl ?? null;
+  const twitterUrl        = heroConfig?.twitterUrl        ?? null;
   const secondaryLines = heroConfig?.secondaryLines?.length
     ? heroConfig.secondaryLines
     : ['Founder & CEO · Technonix', 'Joint Secretary · Bangladesh Human Rights Enforcement Foundation'];
@@ -68,7 +69,7 @@ export default function Hero({ heroConfig }: Props) {
   const officeAddress  = heroConfig?.officeAddress  ?? null;
   const officeMapUrl   = heroConfig?.officeMapUrl   ?? null;
   const primaryEmail   = heroConfig?.primaryEmail   ?? null;
-  const hasSocial = officeAddress || whatsappNumber || linkedinUrl;
+  const hasSocial = officeAddress || whatsappNumber || linkedinUrl || twitterUrl;
 
   return (
     <>
@@ -172,13 +173,13 @@ export default function Hero({ heroConfig }: Props) {
                 <span className="inline-block w-[3px] bg-indigo-400 ml-1 cursor-blink" style={{ height: 'clamp(22px, 2.8vw, 38px)' }} />
               </motion.div>
 
-              {/* Intro paragraph — only shown when saved */}
+              {/* Intro paragraph — highlighted with left accent */}
               {heroConfig?.introPara?.trim() && (
                 <motion.p
                   variants={fadeUp(0.42)}
                   initial="hidden"
                   animate="show"
-                  className="text-sm text-zinc-400 leading-relaxed mb-6 max-w-[480px]"
+                  className="text-[15px] text-zinc-200 leading-relaxed mb-6 max-w-[480px] pl-4 border-l-2 border-indigo-500/60"
                 >
                   {heroConfig.introPara}
                 </motion.p>
@@ -287,6 +288,20 @@ export default function Hero({ heroConfig }: Props) {
                         className="w-[72px] h-[72px] bg-[#1a1a22] border border-white/[0.08] rounded-2xl flex items-center justify-center text-zinc-400 hover:text-blue-400 hover:border-blue-500/40 hover:bg-blue-500/10 transition-all duration-200"
                       >
                         <Linkedin size={26} />
+                      </a>
+                    )}
+                    {twitterUrl && (
+                      <a
+                        href={twitterUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="X (Twitter)"
+                        className="w-[72px] h-[72px] bg-[#1a1a22] border border-white/[0.08] rounded-2xl flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all duration-200"
+                      >
+                        {/* X logo */}
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
                       </a>
                     )}
                   </div>

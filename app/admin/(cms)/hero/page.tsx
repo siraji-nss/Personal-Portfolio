@@ -77,6 +77,12 @@ export default async function HeroAdminPage() {
           hint="e.g. https://linkedin.com/in/yourhandle"
         />
         <Field
+          label="X (Twitter) URL"
+          name="twitterUrl"
+          defaultValue={hero?.twitterUrl ?? ''}
+          hint="e.g. https://x.com/yourhandle — shows X icon in hero and footer."
+        />
+        <Field
           label="WhatsApp Number"
           name="whatsappNumber"
           defaultValue={hero?.whatsappNumber ?? ''}
@@ -105,6 +111,13 @@ export default async function HeroAdminPage() {
           label="Favicon"
           initialUrl={hero?.faviconUrl}
           hint="PNG favicon shown as the browser tab icon. Recommended: 32×32 or 64×64 PNG."
+        />
+
+        <Field
+          label="Page Title (browser tab)"
+          name="siteTitle"
+          defaultValue={hero?.siteTitle ?? ''}
+          hint={`Shown in the browser tab. Defaults to "${hero?.fullName ?? 'Your Name'} — Software Engineer & Technical PM" if left blank.`}
         />
 
         <Field

@@ -35,6 +35,8 @@ export async function updateHeroConfig(formData: FormData) {
     primaryTitle:      (formData.get('primaryTitle')      as string).trim(),
     primaryCompany:    (formData.get('primaryCompany')    as string).trim(),
     primaryCompanyUrl: (formData.get('primaryCompanyUrl') as string)?.trim() || null,
+    siteTitle:         (formData.get('siteTitle')         as string)?.trim() || null,
+    twitterUrl:        (formData.get('twitterUrl')        as string)?.trim() || null,
     secondaryLines,
     linkedinUrl:    (formData.get('linkedinUrl')     as string)?.trim() || null,
     whatsappNumber: (formData.get('whatsappNumber')  as string)?.trim() || null,

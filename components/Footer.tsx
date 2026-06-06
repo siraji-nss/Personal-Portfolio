@@ -6,6 +6,14 @@ import {
   Mail, Linkedin, MessageCircle, ExternalLink, MapPin,
   ArrowUpRight, ChevronRight,
 } from 'lucide-react';
+
+function XIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    </svg>
+  );
+}
 import Link from 'next/link';
 import Image from 'next/image';
 import ContactModal from './ContactModal';
@@ -59,6 +67,7 @@ export default function Footer({ footerConfig, heroConfig }: Props) {
   const fullName       = heroConfig?.fullName       ?? 'Nazmus Sakib Siraji';
   const linkedinUrl    = heroConfig?.linkedinUrl    ?? null;
   const whatsappNumber = heroConfig?.whatsappNumber ?? null;
+  const twitterUrl     = heroConfig?.twitterUrl    ?? null;
   const primaryEmail   = heroConfig?.primaryEmail   ?? null;
   const officeAddress  = heroConfig?.officeAddress  ?? null;
   const avatarUrl      = heroConfig?.avatarUrl      ?? null;
@@ -174,13 +183,20 @@ export default function Footer({ footerConfig, heroConfig }: Props) {
                 <p className="text-[13px] text-zinc-600">Let&apos;s build something great together.</p>
               </div>
 
-              {/* Social icons (swapped from Col 1) */}
+              {/* Social icons */}
               <div className="flex items-center gap-3">
                 {linkedinUrl && (
                   <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"
                     className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.07] flex items-center justify-center text-zinc-500 hover:text-blue-400 hover:border-blue-500/30 hover:bg-blue-500/[0.06] transition-all"
                     title="LinkedIn">
                     <Linkedin size={14} />
+                  </a>
+                )}
+                {twitterUrl && (
+                  <a href={twitterUrl} target="_blank" rel="noopener noreferrer"
+                    className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.07] flex items-center justify-center text-zinc-500 hover:text-white hover:border-white/20 hover:bg-white/[0.06] transition-all"
+                    title="X (Twitter)">
+                    <XIcon />
                   </a>
                 )}
                 {whatsappNumber && (

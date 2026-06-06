@@ -16,6 +16,7 @@ type Testimonial = {
   id: string;
   name: string;
   designation: string;
+  profileUrl: string | null;
   company: string;
   companyUrl: string | null;
   message: string;
@@ -39,6 +40,7 @@ function TestimonialCard({
   const [open, setOpen]               = useState(false);
   const [name, setName]               = useState(t.name);
   const [designation, setDesignation] = useState(t.designation);
+  const [profileUrl, setProfileUrl]   = useState(t.profileUrl ?? '');
   const [company, setCompany]         = useState(t.company);
   const [companyUrl, setCompanyUrl]   = useState(t.companyUrl ?? '');
   const [message, setMessage]         = useState(t.message);
@@ -65,8 +67,8 @@ function TestimonialCard({
     e.preventDefault();
     const fd = new FormData();
     fd.append('id', t.id); fd.append('name', name);
-    fd.append('designation', designation); fd.append('company', company);
-    fd.append('companyUrl', companyUrl);
+    fd.append('designation', designation); fd.append('profileUrl', profileUrl);
+    fd.append('company', company); fd.append('companyUrl', companyUrl);
     fd.append('message', message); fd.append('avatarUrl', avatarUrl);
     fd.append('isPublic', String(isPublic)); fd.append('order', String(t.order));
     startTransition(async () => {
@@ -141,10 +143,11 @@ function TestimonialCard({
           <form onSubmit={handleSave} className="border-t border-white/[0.06] px-4 py-4 space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div><label className={lbl}>Name</label><input value={name} onChange={e => setName(e.target.value)} className={cls} /></div>
-              <div><label className={lbl}>Company</label><input value={company} onChange={e => setCompany(e.target.value)} className={cls} /></div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
               <div><label className={lbl}>Designation</label><input value={designation} onChange={e => setDesignation(e.target.value)} className={cls} /></div>
+            </div>
+            <div><label className={lbl}>Profile / Social URL <span className="normal-case text-zinc-700">(optional)</span></label><input type="url" value={profileUrl} onChange={e => setProfileUrl(e.target.value)} placeholder="https://linkedin.com/in/..." className={cls} /></div>
+            <div className="grid grid-cols-2 gap-3">
+              <div><label className={lbl}>Company</label><input value={company} onChange={e => setCompany(e.target.value)} className={cls} /></div>
               <div><label className={lbl}>Company Website <span className="normal-case text-zinc-700">(optional)</span></label><input type="url" value={companyUrl} onChange={e => setCompanyUrl(e.target.value)} placeholder="https://..." className={cls} /></div>
             </div>
             <div><label className={lbl}>Message</label><textarea value={message} onChange={e => setMessage(e.target.value)} rows={4} className={cls} /></div>
@@ -213,10 +216,11 @@ function AddForm({ count }: { count: number }) {
           <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl p-4 bg-white/[0.025] border border-white/[0.07] rounded-xl">
             <div className="grid grid-cols-2 gap-4">
               <div><label className={lbl}>Name *</label><input name="name" required placeholder="Jane Smith" className={cls} /></div>
-              <div><label className={lbl}>Company *</label><input name="company" required placeholder="Acme Corp" className={cls} /></div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
               <div><label className={lbl}>Designation *</label><input name="designation" required placeholder="CEO" className={cls} /></div>
+            </div>
+            <div><label className={lbl}>Profile / Social URL <span className="normal-case text-zinc-700">(optional)</span></label><input name="profileUrl" type="url" placeholder="https://linkedin.com/in/..." className={cls} /></div>
+            <div className="grid grid-cols-2 gap-4">
+              <div><label className={lbl}>Company *</label><input name="company" required placeholder="Acme Corp" className={cls} /></div>
               <div><label className={lbl}>Company Website <span className="normal-case text-zinc-700">(optional)</span></label><input name="companyUrl" type="url" placeholder="https://..." className={cls} /></div>
             </div>
             <div><label className={lbl}>Message *</label><textarea name="message" required rows={4} className={cls} /></div>

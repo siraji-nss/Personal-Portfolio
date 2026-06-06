@@ -11,19 +11,22 @@ type Props = { testimonials: Testimonial[] };
 
 const FALLBACK: Testimonial[] = [
   {
-    id: '1', name: 'Sarah Johnson', designation: 'CTO', company: 'TechVenture Ltd', companyUrl: null,
+    id: '1', name: 'Sarah Johnson', designation: 'CTO', company: 'TechVenture Ltd',
+    companyUrl: null, profileUrl: null,
     message: 'Working with Sakib was transformative for our product. His dual expertise in engineering and project management meant nothing fell through the cracks. Delivery was on time, on budget, and beyond expectations.',
     avatarUrl: null, isPublic: true, order: 0,
     createdAt: new Date(), updatedAt: new Date(),
   },
   {
-    id: '2', name: 'Ahmed Al-Rashid', designation: 'CEO', company: 'GrowthAxis MENA', companyUrl: null,
+    id: '2', name: 'Ahmed Al-Rashid', designation: 'CEO', company: 'GrowthAxis MENA',
+    companyUrl: null, profileUrl: null,
     message: 'Sakib brought clarity to a chaotic codebase and turned it into a scalable platform. His communication was excellent throughout. I would hire him again without hesitation.',
     avatarUrl: null, isPublic: true, order: 1,
     createdAt: new Date(), updatedAt: new Date(),
   },
   {
-    id: '3', name: 'Priya Nair', designation: 'Product Manager', company: 'EduSpark', companyUrl: null,
+    id: '3', name: 'Priya Nair', designation: 'Product Manager', company: 'EduSpark',
+    companyUrl: null, profileUrl: null,
     message: 'The mobile app Sakib delivered exceeded our brief in every way. His attention to UX detail and his instinct for what users actually need is rare. A true full-stack partner.',
     avatarUrl: null, isPublic: true, order: 2,
     createdAt: new Date(), updatedAt: new Date(),
@@ -80,7 +83,18 @@ function TestimonialCard({ t, delay = 0 }: { t: Testimonial; delay?: number }) {
       <div className="flex items-center gap-3 mt-6 pt-5 border-t border-white/[0.06]">
         <Avatar testimonial={t} />
         <div className="min-w-0">
-          <p className="text-white font-semibold text-sm truncate">{t.name}</p>
+          {t.profileUrl ? (
+            <Link
+              href={t.profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white font-semibold text-sm truncate hover:text-indigo-300 transition-colors underline underline-offset-2 decoration-indigo-500/40 block"
+            >
+              {t.name}
+            </Link>
+          ) : (
+            <p className="text-white font-semibold text-sm truncate">{t.name}</p>
+          )}
           <p className="text-zinc-500 text-xs truncate">
             {t.designation}
             {t.company ? (

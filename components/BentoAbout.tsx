@@ -371,20 +371,6 @@ function DynamicExpanded({ description, bullets, tags, color }: {
 
 const CARDS = [
   {
-    id:            'engineering',
-    title:         'Software Engineering',
-    titleLine2:    '& Architecture',
-    badge:         '10+ Years',
-    accent:        'text-indigo-400',
-    border:        'border-indigo-500/25',
-    glow:          'hover:shadow-[0_0_28px_rgba(99,102,241,0.2)]',
-    gradientFrom:  'from-indigo-900/40',
-    gradientTo:    'to-violet-900/20',
-    iconBg:        'from-indigo-500 to-violet-600',
-    Illustration:  EngineeringIllustration,
-    Expanded:      EngineeringExpanded,
-  },
-  {
     id:            'pm',
     title:         'Technical Project',
     titleLine2:    'Management',
@@ -411,6 +397,20 @@ const CARDS = [
     iconBg:        'from-emerald-500 to-teal-500',
     Illustration:  ConsultingIllustration,
     Expanded:      ConsultingExpanded,
+  },
+  {
+    id:            'engineering',
+    title:         'Software Engineering',
+    titleLine2:    '& Architecture',
+    badge:         '10+ Years',
+    accent:        'text-indigo-400',
+    border:        'border-indigo-500/25',
+    glow:          'hover:shadow-[0_0_28px_rgba(99,102,241,0.2)]',
+    gradientFrom:  'from-indigo-900/40',
+    gradientTo:    'to-violet-900/20',
+    iconBg:        'from-indigo-500 to-violet-600',
+    Illustration:  EngineeringIllustration,
+    Expanded:      EngineeringExpanded,
   },
   {
     id:            'social',

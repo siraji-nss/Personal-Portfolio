@@ -14,6 +14,7 @@ export default async function TestimonialsAdminPage() {
     id: t.id,
     name: t.name,
     designation: t.designation,
+    profileUrl: t.profileUrl,
     company: t.company,
     companyUrl: t.companyUrl,
     message: t.message,

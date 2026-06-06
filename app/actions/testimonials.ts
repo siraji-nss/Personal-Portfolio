@@ -17,6 +17,7 @@ export async function submitTestimonial(formData: FormData) {
     data: {
       name:        (formData.get('name')        as string).trim(),
       designation: (formData.get('designation') as string).trim(),
+      profileUrl:  (formData.get('profileUrl')  as string)?.trim() || null,
       company:     (formData.get('company')     as string).trim(),
       companyUrl:  (formData.get('companyUrl')  as string)?.trim() || null,
       message:     (formData.get('message')     as string).trim(),
@@ -34,6 +35,7 @@ export async function createTestimonial(formData: FormData) {
     data: {
       name:        (formData.get('name')        as string).trim(),
       designation: (formData.get('designation') as string).trim(),
+      profileUrl:  (formData.get('profileUrl')  as string)?.trim() || null,
       company:     (formData.get('company')     as string).trim(),
       companyUrl:  (formData.get('companyUrl')  as string)?.trim() || null,
       message:     (formData.get('message')     as string).trim(),
@@ -54,6 +56,7 @@ export async function updateTestimonial(formData: FormData) {
     data: {
       name:        (formData.get('name')        as string).trim(),
       designation: (formData.get('designation') as string).trim(),
+      profileUrl:  (formData.get('profileUrl')  as string)?.trim() || null,
       company:     (formData.get('company')     as string).trim(),
       companyUrl:  (formData.get('companyUrl')  as string)?.trim() || null,
       message:     (formData.get('message')     as string).trim(),
